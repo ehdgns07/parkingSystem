@@ -13,12 +13,14 @@ public class Car {
     private String numberPlate;
     private CarType carType;
     private ParkingspaceRepository parkingSpace;
+    private int money = 0;
     ParkingService parkingService = new ParkingService();
     LocalTime time;
 
     public Car(String numberPlate, LocalTime time) {
         this.numberPlate = numberPlate;
         this.time = time;
+        this.money = 10000;
 //        this.carType = carType;
     }
 

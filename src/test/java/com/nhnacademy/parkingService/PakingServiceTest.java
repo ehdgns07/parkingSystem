@@ -1,16 +1,12 @@
 package com.nhnacademy.parkingService;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
-import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.HashMap;
-import java.util.Map;
 import org.junit.jupiter.api.Test;
 
 class PakingServiceTest {
-    ParkingSpace parkingSpace = new ParkingSpace();
+    ParkingLot parkingSpace = new ParkingLot();
     @Test
     void scan() {
         Car car;
@@ -20,8 +16,27 @@ class PakingServiceTest {
     }
 
     @Test
+    void initParkingLot(){
+
+
+    }
+    @Test
     void parking() {
-        Car car = new Car("12가 1234");
+        Car car = new Car("12가 1234",LocalTime.now());
         assertThat(parkingSpace.parking(car)).isNotNull();
+    }
+
+    @Test
+    void parkingInParkingSpace() {
+        Car car = new Car("12가 1234",LocalTime.now());
+        ParkingSpace parkingspace = new ParkingSpace();
+
+        assertThat(parkingspace.park(car)).isNotNull();
+        parkingspace.park(car);
+        assertThat(parkingspace.spaceNumber.get(0)).isEqualTo(car.getCarNumberPlate());
+        parkingspace.park(car);
+        parkingspace.park(car);
+        assertThat(parkingspace.park(car)).isFalse();
+
     }
 }
