@@ -1,11 +1,8 @@
 package com.nhnacademy.parkingService;
 
-import static com.nhnacademy.parkingService.CarType.LARGE;
-import static com.nhnacademy.parkingService.CarType.LIGHT;
-import static com.nhnacademy.parkingService.CarType.MEDIUM;
-import static com.nhnacademy.parkingService.CarType.SMALL;
-
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.temporal.Temporal;
 import java.util.Objects;
 
 public class Car {
@@ -13,15 +10,18 @@ public class Car {
     private String numberPlate;
     private CarType carType;
     private ParkingspaceRepository parkingSpace;
-    private int money = 0;
+    private long money = 0;
     ParkingService parkingService = new ParkingService();
-    LocalTime time;
+    private LocalDateTime time;
 
-    public Car(String numberPlate, LocalTime time) {
+    public Car(String numberPlate) {
         this.numberPlate = numberPlate;
-        this.time = time;
-        this.money = 10000;
+        this.money = 100000;
 //        this.carType = carType;
+    }
+
+    public void scanningTimeOfParking(){
+        this.time = LocalDateTime.now();
     }
 
     @Override
@@ -60,5 +60,21 @@ public class Car {
 
     public String getCarNumberPlate() {
         return numberPlate;
+    }
+
+    public int getHour(){
+        return time.getHour();
+    }
+    public int getMinute() {
+        return time.getMinute();
+    }
+
+    public LocalDateTime getTime() {
+        return time;
+    }
+
+    public long settlementMoney(long price) {
+        this.money -= price;
+        return money;
     }
 }

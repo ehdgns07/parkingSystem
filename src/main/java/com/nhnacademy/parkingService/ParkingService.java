@@ -1,14 +1,16 @@
 package com.nhnacademy.parkingService;
 
-import java.util.Map;
-
 public class ParkingService {
-    private final ParkingspaceRepository parkingSpace = new ParkingLot();
+    private static final ParkingspaceRepository parkingLot = new ParkingLot();
 
-    public void scan(Car car) { parkingSpace.scan(car); }
+    public static void main(String[] args) {
+        Car car = new Car("12카 1234");
+        parkingLot.scan(car);
+        parkingLot.parking(car);
+    }
 
     public Car parking(String numberplate, Car car) {
-
+        parkingLot.parking(car);
     return car;
     }
 }

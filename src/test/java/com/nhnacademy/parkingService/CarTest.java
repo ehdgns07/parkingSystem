@@ -18,16 +18,4 @@ class CarTest {
         //service = new PakingService(repository);
     }
 
-    @Test
-    void carComesIn() {
-//   String numberplate = "김해11가1234";
-//   Car car = new Car(numberplate);
-//   when(parkingSpace.scan(car)).thenReturn(car);
-//
-//    Car newCar = parkingSpace.scan(car);
-//
-//    assertThat(newCar).isEqualTo(car);
-    }
-
-
 }
