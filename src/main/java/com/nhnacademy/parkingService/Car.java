@@ -1,29 +1,24 @@
 package com.nhnacademy.parkingService;
 
 import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.temporal.Temporal;
 import java.util.Objects;
 
 public class Car {
 
     private String numberPlate;
     private CarType carType;
-    private ParkingspaceRepository parkingSpace;
-
-
 
     private long money = 0;
     ParkingService parkingService = new ParkingService();
     private LocalDateTime time;
 
-    public Car(String numberPlate) {
+    public Car(String numberPlate, CarType carType) {
         this.numberPlate = numberPlate;
         this.money = 100000;
-//        this.carType = carType;
+        this.carType = carType;
     }
 
-    public void scanningTimeOfParking(){
+    public void scanningTimeOfParking() {
         this.time = LocalDateTime.now();
     }
 
@@ -39,11 +34,11 @@ public class Car {
         return Objects.equals(numberPlate, car.numberPlate) && carType == car.carType;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(numberPlate, carType);
-    }
-
+//    @Override
+//    public int hashCode() {
+//        return Objects.hash(numberPlate, carType);
+//    }
+//
 //    public static Car large(String numberPlate) {
 //        return new Car(numberPlate, LARGE); }
 //
@@ -59,15 +54,16 @@ public class Car {
 //    public void CarComesIn() {
 //        parkingService.scan(new Car("김해12가1234", MEDIUM));
 //    }
-//
+
 
     public String getCarNumberPlate() {
         return numberPlate;
     }
 
-    public int getHour(){
+    public int getHour() {
         return time.getHour();
     }
+
     public int getMinute() {
         return time.getMinute();
     }
@@ -77,7 +73,7 @@ public class Car {
     }
 
     public long settlementMoney(long price) {
-        if((money - price) < 0) {
+        if ((money - price) < 0) {
             throw new MoneyUnderBoundException("Not enough money");
         }
 
@@ -89,5 +85,9 @@ public class Car {
 
     public long getMoney() {
         return money;
+    }
+
+    public CarType getCarType() {
+        return carType;
     }
 }

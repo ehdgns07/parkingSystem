@@ -2,11 +2,13 @@ package com.nhnacademy.parkingService;
 
 public class ParkingService {
     private static final ParkingLot parkingLot = new ParkingLot();
+    static Car carA;
+    static Car carB;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
 
-        Car carA = new Car("12카 1234");
-        Car carB = new Car("12카 2345");
+        carA = new Car("12카 1234", CarType.MIDSIZE);
+        carB = new Car("12카 2345", CarType.LIGHT);
 
         Thread enter1 = new Enter(parkingLot, carA);
         Thread enter2 = new Enter(parkingLot, carB);
@@ -14,10 +16,13 @@ public class ParkingService {
         parkingLot.initParkingLot();
 
         enter1.start();
-        enter2.start();
-
+        enter1.join();
         parkingLot.parking(carA);
+        enter2.start();
+        enter2.join();
         parkingLot.parking(carB);
+
+
         System.out.println("입차 완료");
 
         Thread exitParkingLot1 = new ExitParkingLot(parkingLot, carA);

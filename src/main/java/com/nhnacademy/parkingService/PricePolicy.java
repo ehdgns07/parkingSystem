@@ -11,7 +11,6 @@ public class PricePolicy implements PricePolicyRepository {
     @Override
     public long settlement(Car car) {
         long timeStamp = 0;
-        long day = 1;
         long fee = 0;
         long remainMoney = 0;
 
@@ -25,8 +24,8 @@ public class PricePolicy implements PricePolicyRepository {
         if (SubtractionDaysAboutInAndOut(car, time) >= 24) {
             long days = SubtractionDaysAboutInAndOut(car, time)/24;
             fee = AFTERONEDAY * days;
-            timeStamp = SubtractionMinutesAboutInAndOut(car, time)-days*60;
-            fee =+ AfterDayAndGetOverEveryTenMinutes(timeStamp);
+            timeStamp = SubtractionMinutesAboutInAndOut(car, time)-days*24*60;
+            fee += AfterDayAndGetOverEveryTenMinutes(timeStamp);
         } else {
             fee = getOverThirtyMinutes(car, time);
         }

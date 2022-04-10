@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 class EnterTest {
     ParkingLot parkingLot = new ParkingLot();
-    Car car = new Car("12가 1234");
+    Car car = new Car("12가 1234", CarType.MIDSIZE);
     Enter enter = new Enter(parkingLot, car);
     @Test
     void run() {

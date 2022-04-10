@@ -26,10 +26,10 @@ class ExitParkingLotTest {
     @BeforeEach
     void setUp() {
         parkingSpace = new ParkingSpace();
-        car1 = new Car("12가 1234");
-        car2 = new Car("12가 1235");
-        car3 = new Car("12가 1236");
-        car4 = new Car("12가 1237");
+        car1 = new Car("12가 1234", CarType.MIDSIZE);
+        car2 = new Car("12가 1235", CarType.MIDSIZE);
+        car3 = new Car("12가 1236", CarType.MIDSIZE);
+        car4 = new Car("12가 1237", CarType.MIDSIZE);
 
         car1.scanningTimeOfParking();
         car2.scanningTimeOfParking();

@@ -12,7 +12,7 @@ class PakingServiceTest {
     @DisplayName("주차장으로 진입")
     @Test
     void parking() {
-        Car car = new Car("12가 1234");
+        Car car = new Car("12가 1234", CarType.MIDSIZE);
         parkingLot.initParkingLot();
         assertThat(parkingLot.parking(car)).isNotNull();
     }
@@ -20,7 +20,7 @@ class PakingServiceTest {
 @DisplayName("주차 공간에 주차")
     @Test
     void parkingInParkingSpace() {
-        Car car = new Car("12가 1234");
+        Car car = new Car("12가 1234", CarType.MIDSIZE);
         ParkingSpace parkingspace = new ParkingSpace();
 
         assertThat(parkingspace.park(car)).isNotNull();
