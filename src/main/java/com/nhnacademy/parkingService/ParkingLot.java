@@ -1,17 +1,15 @@
 package com.nhnacademy.parkingService;
 
 
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ParkingLot implements ParkingspaceRepository {
+public class ParkingLot {
     Map<String, Car> source = new HashMap<>();
-    List<String> numberPlate = new ArrayList<>();
     List<ParkingSpace> parkingSpace = new ArrayList<>();
-    ExitParkingLot exitParkingLot = new ExitParkingLot();
+    
 
     public void initParkingLot(){
         for (int i = 0; i <4 ; i++) {
@@ -19,23 +17,26 @@ public class ParkingLot implements ParkingspaceRepository {
         }
     }
 
-    @Override
-    public Car scan(Car car) {
-        numberPlate.add(car.getCarNumberPlate());
-        car.scanningTimeOfParking();
-        return car;
-    }
-
     public Car parking(Car car){
+        boolean isSuccessParking = false;
         source.put(car.getCarNumberPlate(), car);
-        for (int index = 0; index < 4; index++) {
-            parkingSpace.get(index).park(car);
-        }
 
+        for (int index = 0; index < 4; index++) {
+            if(isSuccessParking == false) {
+                isSuccessParking = parkingSpace.get(index).park(car);
+            }
+            if(isSuccessParking == true)
+                break;
+        }
         return car;
     }
 
-    public void outOfParkingLot(Car car){
-//        exitParkingLot.outOfParkingLot(car,parkingSpace);
+    public boolean WithdrawCar(Car car){
+        boolean isRemoveSuccess = false;
+        for (int index = 0; index < 4; index++) {
+            isRemoveSuccess = parkingSpace.get(index).removeCar(car);
+        }
+        return isRemoveSuccess;
+
     }
 }

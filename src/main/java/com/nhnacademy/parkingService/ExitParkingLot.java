@@ -1,22 +1,31 @@
 package com.nhnacademy.parkingService;
 
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
+public class ExitParkingLot extends Thread{
+    ParkingLot parkingLot;
+    Car car;
+    long remainMoney = 0;
 
-public class ExitParkingLot {
-    int fee = 0;
+    ExitParkingLot(ParkingLot parkingLot, Car car){
+        this.parkingLot = parkingLot;
+        this.car = car;
 
-    public int outOfParkingLot(Car car, ParkingSpace parkingSpace) {
-        settlement(car);
-        parkingSpace.getEachSpaceMap().remove(car.getCarNumberPlate());
-
-        return fee;
     }
 
-    public void settlement(Car car) {
+    public void run(){
+        boolean isRemoveSuccess;
+
+        isRemoveSuccess = parkingLot.WithdrawCar(car);
+        if(isRemoveSuccess) {
+            remainMoney = settlement(car);
+        }
+
+        System.out.println("남은돈은 : "  +  remainMoney);
+
+    }
+
+    public long settlement(Car car) {
         PricePolicy pricePolicy = new PricePolicy();
-//        if ((ChronoUnit.MINUTES.between(car.getTime(), time)) < 30) {
-//
-//        }
+        remainMoney = pricePolicy.settlement(car);
+        return remainMoney;
     }
 }

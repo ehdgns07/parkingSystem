@@ -10,6 +10,9 @@ public class Car {
     private String numberPlate;
     private CarType carType;
     private ParkingspaceRepository parkingSpace;
+
+
+
     private long money = 0;
     ParkingService parkingService = new ParkingService();
     private LocalDateTime time;
@@ -74,7 +77,17 @@ public class Car {
     }
 
     public long settlementMoney(long price) {
+        if((money - price) < 0) {
+            throw new MoneyUnderBoundException("Not enough money");
+        }
+
         this.money -= price;
+        System.out.println("요금은 :" + price);
+
+        return this.money;
+    }
+
+    public long getMoney() {
         return money;
     }
 }

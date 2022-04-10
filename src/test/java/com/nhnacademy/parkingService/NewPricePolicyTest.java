@@ -5,10 +5,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class PricePolicyTest {
+class NewPricePolicyTest {
     Car car1;
     Car car2;
     Car car3;
@@ -34,34 +33,39 @@ class PricePolicyTest {
         parkingSpace.park(car4);
 
     }
-@DisplayName("1번째 가격정책 적용 부분")
+
     @Test
     void settlement() {
-//       LocalDateTime time = LocalDateTime.of(2022,4,9,18,,0,0);
+
         LocalDateTime time = ChronoUnit.MINUTES.addTo(car1.getTime(), 29);
         assertThat(ChronoUnit.MINUTES.between(car1.getTime(), time)).isEqualTo(29);
         long timeStamp = ChronoUnit.MINUTES.between(car1.getTime(), time);
 
         if (timeStamp < 30) {
-            assertThat(car1.settlementMoney(1000)).isEqualTo(99000);
+            assertThat(car1.settlementMoney(0)).isEqualTo(100000);
         }
 
-        time = ChronoUnit.MINUTES.addTo(car1.getTime(), 31);
+        time = ChronoUnit.MINUTES.addTo(car1.getTime(), 30);
         timeStamp = ChronoUnit.MINUTES.between(car1.getTime(), time);
 
-        long overThirtyMinutes = 1000 + (((timeStamp - 30) / 10 + 1) * 500);
+
+
+        if (timeStamp >= 30 && timeStamp < 60) {
+            assertThat(car1.settlementMoney(1000)).isEqualTo(99000);
+        }
+        time = ChronoUnit.MINUTES.addTo(car1.getTime(), 60);
+        timeStamp = ChronoUnit.MINUTES.between(car1.getTime(), time);
+        assertThat(ChronoUnit.MINUTES.between(car1.getTime(), time)).isEqualTo(60);
+
+        long overThirtyMinutes = 1000 + (((timeStamp - 60) / 10 + 1) * 500);
         assertThat(car1.settlementMoney(overThirtyMinutes)).isEqualTo(97500);
 
-        time = LocalDateTime.of(2022, 4, 11, 20, 0, 0, 0);
+        time = LocalDateTime.of(2022, 4, 11, 18, 0, 0, 0);
         timeStamp = ChronoUnit.HOURS.between(car1.getTime(), time);
 
         long day = 24;
         if (timeStamp >= day) {
-            assertThat(car1.settlementMoney(10000 * (timeStamp/24))).isEqualTo(87500);
-            timeStamp = ChronoUnit.MINUTES.between(car1.getTime(), time)-day*60;
-            overThirtyMinutes = 1000 + (((timeStamp - 30) / 10 + 1) * 500);
-            assertThat(car1.settlementMoney(overThirtyMinutes)).isEqualTo(86000);
-
+            assertThat(car1.settlementMoney(15000 * (timeStamp/24))).isEqualTo(82500);
         }
     }
 }
