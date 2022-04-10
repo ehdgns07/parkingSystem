@@ -78,7 +78,7 @@ public class Car {
         }
 
         this.money -= price;
-        System.out.println("요금은 :" + price);
+        System.out.println(getCarNumberPlate()+ " 요금은 :" + price);
 
         return this.money;
     }

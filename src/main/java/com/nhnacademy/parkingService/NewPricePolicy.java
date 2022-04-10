@@ -4,9 +4,9 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
 public class NewPricePolicy implements PricePolicyRepository {
-    private static final long UNDERTHERTYMINUTE = 1000;
-    private static final long AFTERTHERTYMINUTE = 500;
-    private static final long AFTERONEDAY = 10000;
+    private static final long UNDERONEHOUR = 1000;
+    private static final long AFTERONEHOUR = 500;
+    private static final long AFTERONEDAY = 15000;
 
     @Override
     public long settlement(Car car) {
@@ -17,9 +17,9 @@ public class NewPricePolicy implements PricePolicyRepository {
 //        LocalDateTime time = LocalDateTime.now();
         LocalDateTime time = LocalDateTime.of(2022, 4, 11, 21, 0, 0, 0);
 
-        if ((SubtractionMinutesAboutInAndOut(car, time)) < 30) {
-            car.settlementMoney(UNDERTHERTYMINUTE);
-            fee = UNDERTHERTYMINUTE;
+        if ((SubtractionMinutesAboutInAndOut(car, time)) < 60) {
+            car.settlementMoney(UNDERONEHOUR);
+            fee = UNDERONEHOUR;
         }
         if (SubtractionDaysAboutInAndOut(car, time) >= 24) {
             long days = SubtractionDaysAboutInAndOut(car, time) / 24;
@@ -27,7 +27,7 @@ public class NewPricePolicy implements PricePolicyRepository {
             timeStamp = SubtractionMinutesAboutInAndOut(car, time) - days * 24 * 60;
             fee += AfterDayAndGetOverEveryTenMinutes(timeStamp);
         } else {
-            fee = getOverThirtyMinutes(car, time);
+            fee = getOverOneHour(car, time);
         }
         if (car.getCarType() == CarType.LIGHT) {
             fee /= 2;
@@ -39,12 +39,12 @@ public class NewPricePolicy implements PricePolicyRepository {
 
     private long AfterDayAndGetOverEveryTenMinutes(long timeStamp) {
         return 1000 +
-            (((timeStamp - 60) / 10 + 1) * AFTERTHERTYMINUTE);
+            (((timeStamp - 60) / 10 + 1) * AFTERONEHOUR);
     }
 
-    private long getOverThirtyMinutes(Car car, LocalDateTime time) {
+    private long getOverOneHour(Car car, LocalDateTime time) {
         return 1000 +
-            (((SubtractionMinutesAboutInAndOut(car, time) - 60) / 10 + 1) * AFTERTHERTYMINUTE);
+            (((SubtractionMinutesAboutInAndOut(car, time) - 60) / 10 + 1) * AFTERONEHOUR);
     }
 
     public long SubtractionMinutesAboutInAndOut(Car car, LocalDateTime time) {

@@ -19,7 +19,7 @@ public class ExitParkingLot extends Thread {
             remainMoney = settlement(car);
         }
 
-        System.out.println("남은돈은 : " + remainMoney);
+        System.out.println(car.getCarNumberPlate() + " 남은돈은 : " + remainMoney);
 
     }
 
